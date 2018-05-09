@@ -1,0 +1,10 @@
+##ignore this file##
+/.idea/
+/venv/
+
+##filter databfile¡¢sln file##
+*.xls
+*.xlsx
+
+##filter pwdcfg file##
+pwdcfg.py
