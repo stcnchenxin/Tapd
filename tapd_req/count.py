@@ -43,6 +43,13 @@ def get_story_ids(iterids):
             storyids.append(storys['Story']['id'])
     return storyids
 
+
+iterate = search.Story()
+r = iterate.get_story_custom_fields()
+for custom in r.json()['data']:
+    print custom['CustomFieldConfig']['custom_field']
+
+
 # story = search.Story()
 # sty = story.get_story(**{'id':'1120990771001012467'})
 # print sty.url
