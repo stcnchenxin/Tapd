@@ -6,7 +6,7 @@ from xls import open_xls, write_xls, save_xls
 import string
 
 
-iter_query = {'startdate':'>2018-03-18', 'enddate':'<2018-04-23'}
+iter_query = {'startdate': '>2018-03-18', 'enddate': '<2018-04-23'}
 
 
 # 获取迭代id，参数为查询条件，字典形式
@@ -48,19 +48,3 @@ iterate = search.Story()
 r = iterate.get_story_custom_fields()
 for custom in r.json()['data']:
     print custom['CustomFieldConfig']['custom_field']
-
-
-# story = search.Story()
-# sty = story.get_story(**{'id':'1120990771001012467'})
-# print sty.url
-# print sty.json()
-# print sty.json()['data']['Story']['custom_field_98']
-
-# iterids = get_iteration_ids(**iterquery)
-# storyids = get_story_ids(iterids)
-#
-# print storyids
-
-# tapd = search.BaseTapd()
-# abc = tapd('https://api.tapd.cn/stories/custom_field_url', **{'workspace_id':'20990771'})
-# print abc.url
