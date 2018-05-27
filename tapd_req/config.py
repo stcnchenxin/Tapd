@@ -6,6 +6,8 @@ class Config(object):
     URL_GET_STORY = 'https://api.tapd.cn/stories'
     URL_GET_STORY_COUNT = 'https://api.tapd.cn/stories/count'
     URL_GET_STORY_CUSTOM_FIELDS = 'https://api.tapd.cn/stories/custom_fields_settings'
+    URL_GET_STORY_CHANGE = 'https://api.tapd.cn/story_changes'
+    URL_GET_STORY_CHANGE_COUNT = 'https://api.tapd.cn/story_changes/count'
     URL_GET_BUG = 'https://api.tapd.cn/bugs'
     URL_GET_BUG_COUNT = 'https://api.tapd.cn/bugs/count'
     URL_GET_BUG_GROUP_COUNT = 'https://api.tapd.cn/bugs/group_count'

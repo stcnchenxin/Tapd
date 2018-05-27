@@ -31,6 +31,12 @@ class BaseTapd(object):
     def get_count(self, typename, workspace = DEFAULT_WORKSPACE, **query):
         return self._callback('_get_', typename + '_count', workspace, **query)
 
+    def get_change(self, typename, workspace = DEFAULT_WORKSPACE, **query):
+        return self._callback('_get_', typename + '_change', workspace, **query)
+
+    def get_change_count(self, typename, workspace = DEFAULT_WORKSPACE, **query):
+        return self._callback('_get_', typename + '_change_count', workspace, **query)
+
     def get_custom_fields(self, typename, workspace = DEFAULT_WORKSPACE, **query):
         return self._callback('_get_', typename + '_custom_fields', workspace, **query)
 
@@ -50,6 +56,8 @@ class TapdHandler(BaseTapd):
     You can call the following funcitons to get the data from api.tapd.cn, and it will be returned the data like json:
     get_data(typename, workspace, **query)
     get_count(typename, workspace, **query)
+    get_change(self, typename, workspace, **query)
+    get_change_count(self, typename, workspace, **query)
     get_custom_fields(typename, workspace, **query)
     get_group_count(typename, workspace, **query)
     add_data(typename, workspace, **query)
@@ -70,6 +78,8 @@ class TapdHandler(BaseTapd):
         self._url_story = Cfg.URL_GET_STORY
         self._url_story_count = Cfg.URL_GET_STORY_COUNT
         self._url_story_custom_fields = Cfg.URL_GET_STORY_CUSTOM_FIELDS
+        self._url_story_change = Cfg.URL_GET_STORY_CHANGE
+        self._url_story_change_count = Cfg.URL_GET_STORY_CHANGE_COUNT
 
         self._url_bug = Cfg.URL_GET_BUG
         self._url_bug_count = Cfg.URL_GET_BUG_COUNT
@@ -96,6 +106,12 @@ class TapdHandler(BaseTapd):
 
     def _get_story_count(self, **query):
         return self._query(self._url_story_count, **query)
+
+    def _get_story_change(self, **query):
+        return self._query(self._url_story_change, **query)
+
+    def _get_story_change_count(self, **query):
+        return self._query(self._url_story_change_count, **query)
 
     def _get_story_custom_fields(self, **query):
         return self._query(self._url_story_custom_fields, **query)
