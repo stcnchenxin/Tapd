@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import requests
-from config import Config as Cfg
+from config import TapdUrlConfig as Cfg
 from pwdcfg import PWDConfig
 DEFAULT_WORKSPACE = {'workspace_id': Cfg.WORKSPACE_ID_Q6}
 
@@ -14,8 +14,8 @@ class BaseTapd(object):
     def __init__(self):
         self._auth = (PWDConfig.API_USERNAME, PWDConfig.API_PWD)
 
-    def _callback(self, prefix, name, workspace, **kwargs):
-        method = getattr(self, prefix + name)
+    def _callback(self, prefix, typename, workspace, **kwargs):
+        method = getattr(self, prefix + typename)
         if callable(method):
             kwargs.update(workspace)
             return method(**kwargs)
@@ -47,11 +47,11 @@ class BaseTapd(object):
         return self._callback('_add_', typename, workspace, **query)
 
 
-class TapdHandler(BaseTapd):
+class TapdRequest(BaseTapd):
     """
     This handel program is used to handel the tapd.
 
-    All of the methods in TapdHandler can be called by the funciton in class :class:`BaseTapd <BaseTapd>` like get_data(), get_count() .etc
+    All of the methods in TapdRequest can be called by the funciton in class :class:`BaseTapd <BaseTapd>` like get_data(), get_count() .etc
 
     You can call the following funcitons to get the data from api.tapd.cn, and it will be returned the data like json:
     get_data(typename, workspace, **query)
@@ -70,7 +70,7 @@ class TapdHandler(BaseTapd):
     """
 
     def __init__(self):
-        super(TapdHandler, self).__init__()
+        super(TapdRequest, self).__init__()
         self._url_iteration = Cfg.URL_GET_ITERATION
         self._url_iteration_count = Cfg.URL_GET_ITERATION_COUNT
         self._url_iteration_custom_fields = Cfg.URL_GET_ITERATION_CUSTOM_FIELDS

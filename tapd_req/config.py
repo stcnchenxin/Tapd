@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-class Config(object):
+class TapdUrlConfig(object):
     URL_GET_STORY = 'https://api.tapd.cn/stories'
     URL_GET_STORY_COUNT = 'https://api.tapd.cn/stories/count'
     URL_GET_STORY_CUSTOM_FIELDS = 'https://api.tapd.cn/stories/custom_fields_settings'
@@ -24,3 +24,7 @@ class Config(object):
 
     WORKSPACE_ID_Q6 = '20990771'
 
+
+class XlsFormatConfig(object):
+    # 字体：微软雅黑，字号11，加边框
+    DEFAULT_FORMAT = u"font: height 0x00DC, name 微软雅黑; borders: left 0x01, right 0x01, top 0x01, bottom 0x01"
