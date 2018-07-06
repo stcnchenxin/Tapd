@@ -10,16 +10,16 @@ class TpadDataHandler(object):
             story = storydata['Story']
             result = []
             for field in fieldlist:
-                result.append(story[field])
+                result.append({field: story[field]})
             yield result
 
     def task_handler(self, taskjson, fieldlist):
         jsons = self._json_to_list(taskjson['data'])
         for taskjson in jsons:
             task = taskjson['Task']
-            midresult = []
+            midresult = {}
             for field in fieldlist:
-                midresult.append(task[field])
+                midresult.update({field: task[field]})
             yield midresult
 
     def _json_to_list(self, jsons):
