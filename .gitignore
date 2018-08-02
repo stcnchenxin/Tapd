@@ -5,6 +5,7 @@
 ##filter databfile¡¢sln file##
 *.xls
 *.xlsx
+*.pyc
 
 ##filter pwdcfg file##
 pwdcfg.py
