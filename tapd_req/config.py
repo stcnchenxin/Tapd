@@ -55,6 +55,10 @@ class TapdRespondFiled(object):
     FIELD_COUNT = 'count'
 
 
+class CharacterCombination(object):
+    Q6_QC = [u'甘芳琳;', u'邹祖业;', u'赖增涛;', u'肖兴亮;']
+
+
 class XlsFormatConfig(object):
     r"""
     字体：微软雅黑，字号11，加边框

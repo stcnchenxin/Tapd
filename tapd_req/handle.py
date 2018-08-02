@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import search
+import config
 from config import TapdRespondFiled as Cfg
+DEFAULT_WORKSPACE = {'workspace_id': config.TapdUrlConfig.WORKSPACE_ID_Q6}
 
 
 class TapdJsonHandler(object):
@@ -63,28 +65,21 @@ class TpadHandler(TapdJsonHandler):
     def __init__(self):
         self.tapd = search.TapdRequest()
 
-    # Return a list of the ids of the iterations. The parameter is the QUERY dictionary, just like: {'name': 'iteration_name'}
-    def get_iteration_ids(self, **iterquery):
-        ids = []
-        iterdatas = self.tapd.get_data('iteration', **iterquery)
-        for iterdata in self.json_to_list(iterdatas.json()['data']):
-            ids.extend(iterdata['Iteration']['id'])
-        return ids
-
     # Return a list of the ids of the iterations. The parameter must be the name of the iteration of tapd.
-    def get_iteration_ids_by_name(self, name):
-        query = {'name': name}
-        ids = self.get_iteration_ids(**query)
-        return ids
+    def get_iteration_id_by_name(self, name, wsp = DEFAULT_WORKSPACE):
+        r = self.tapd.get_data('iteration', wsp, name = name)
+        id_data = self.json_to_list(r.json()['data'])
+        return id_data[0]['Iteration']['id']
 
     # You can get the data of tapd by using this funciton, and the QUERY condition(parameter iterid) is the id of iteration of tapd.
     # request_data_type: The type of the tapd's data, could be 'story', 'task' or 'bug'.
     # iterid: It must be the id of iteration.
-    def get_data_by_iterid(self, data_type, iterid):
-        r = self.tapd.get_data(data_type, {'iteration_id': iterid})
-        return r.json()['data']
-
-
+    def get_data_by_id(self, typename, tid, wsp = DEFAULT_WORKSPACE):
+        if typename == 'iteration':
+            r = self.tapd.get_data(typename, wsp, id = tid)
+        else:
+            r = self.tapd.get_data(typename, wsp, iteration_id = tid)
+        return r.json()
 
 
 #
