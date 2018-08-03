@@ -32,9 +32,11 @@ class BaseTapd(object):
         return self._callback('_get_', typename + '_count', workspace, **query)
 
     def get_change(self, typename, workspace = DEFAULT_WORKSPACE, **query):
+        r""" Just for STORY, BUG """
         return self._callback('_get_', typename + '_change', workspace, **query)
 
     def get_change_count(self, typename, workspace = DEFAULT_WORKSPACE, **query):
+        r""" Just for STORY, BUG """
         return self._callback('_get_', typename + '_change_count', workspace, **query)
 
     def get_custom_fields(self, typename, workspace = DEFAULT_WORKSPACE, **query):
@@ -86,6 +88,8 @@ class TapdRequest(BaseTapd):
         self._url_bug_group_count = Cfg.URL_GET_BUG_GROUP_COUNT
         self._url_bug_custom_fields = Cfg.URL_GET_BUG_CUSTOM_FIELDS
         self._url_add_bug = Cfg.URL_POST_ADD_BUG
+        self._url_bug_change = Cfg.URL_GET_BUG_CHANGE
+        self._url_bug_change_count = Cfg.URL_GET_BUG_CHANGE_COUNT
 
         self._url_task = Cfg.URL_GET_TASK
         self._url_task_count = Cfg.URL_GET_TASK_COUNT
@@ -127,6 +131,12 @@ class TapdRequest(BaseTapd):
 
     def _get_bug_custom_fields(self, **query):
         return self._query(self._url_bug_custom_fields, **query)
+
+    def _get_bug_change(self, **query):
+        return self._query(self._url_bug_change, **query)
+
+    def _get_bug_change_count(self, **query):
+        return self._query(self._url_bug_change_count, **query)
 
     # todo: add tapd bug.
     def _add_bug(self):
