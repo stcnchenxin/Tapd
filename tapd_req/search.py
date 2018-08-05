@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+import time
 import requests
+from config import TapdSearchContent as seaCfg
 from config import TapdUrlConfig as Cfg
+from config import TapdRequestArg as reqCfg
 from pwdcfg import PWDConfig
-DEFAULT_WORKSPACE = {'workspace_id': Cfg.WORKSPACE_ID_Q6}
+DEFAULT_WORKSPACE = {reqCfg.REQ_WORKSPACE_ID_FIELD: seaCfg.DEFAULT_WORKSPACE_ID}
 
 
 class BaseTapd(object):
@@ -23,6 +25,8 @@ class BaseTapd(object):
     def _query(self, url, workspace = DEFAULT_WORKSPACE, **kwargs):
         kwargs.update(workspace)
         r = requests.get(url, params = kwargs, auth = self._auth)
+        # tapd.api limit the request frequency: request 1 in a second.
+        time.sleep(1.0)
         return r
 
     def get_data(self, typename, workspace = DEFAULT_WORKSPACE, **query):
@@ -45,6 +49,11 @@ class BaseTapd(object):
     def get_group_count(self, typename, workspace = DEFAULT_WORKSPACE, **query):
         return self._callback('_get_', typename + '_group_count', workspace, **query)
 
+    def get_status_stream(self, typename, workspace = DEFAULT_WORKSPACE, **query):
+        r""" Just for STORY, BUG """
+        return self._callback('_get_', typename + '_status_stream', workspace, **query)
+
+    # todo: 未实现，后期有空再做
     def add_data(self, typename, workspace = DEFAULT_WORKSPACE, **query):
         return self._callback('_add_', typename, workspace, **query)
 
@@ -70,7 +79,6 @@ class TapdRequest(BaseTapd):
     :type: workspace: dictionary
     :param: query: (optional) you can get the data form this query condition. You can get the query condition form: https://www.tapd.cn/help/view#1120003271001001250
     """
-
     def __init__(self):
         super(TapdRequest, self).__init__()
         self._url_iteration = Cfg.URL_GET_ITERATION
@@ -95,6 +103,8 @@ class TapdRequest(BaseTapd):
         self._url_task_count = Cfg.URL_GET_TASK_COUNT
         self._url_task_custom_fields = Cfg.URL_GET_TASK_CUSTOM_FIELDS
         self._url_add_task = Cfg.URL_POST_ADD_TASK
+
+        self._url_status_stream = Cfg.URL_GET_STATUS_STREAM
 
     def _get_iteration(self, **query):
         return self._query(self._url_iteration, **query)
@@ -154,3 +164,9 @@ class TapdRequest(BaseTapd):
     # todo: add tapd task.
     def _add_task(self):
         pass
+
+    def _get_story_status_stream(self, **query):
+        return self._query(self._url_status_stream, **query)
+
+    def _get_bug_status_stream(self, **query):
+        return self._query(self._url_status_stream, **query)
